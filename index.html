@@ -6,38 +6,44 @@
   <title>Portfolio</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    .sidebar-hidden {
+    /* .sidebar-hidden {
       transform: translateX(-100%);
-    }
+    } */
+     /* Hides scrollbar for WebKit browsers (Chrome, Safari) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hides scrollbar for Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
 /* Gaya umum untuk slider */
 .tag-list {
-  /* width: 30rem; */
-  /* max-width: 90vw; */
   display: flex;
-  flex-shrink: 0;
   flex-direction: column;
-  gap: 1rem 0;
-  position: relative;
-  /* padding: 1.5rem 0; */
+  gap: 1rem;
   overflow: hidden;
+  position: relative;
 }
 
 .loop-slider {
-  .inner {
-    display: flex;
-    width: fit-content;
-    animation-name: loop;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: var(--direction);
-    animation-duration: var(--duration);
-  }
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+.inner {
+  display: flex;
+  animation: loop var(--duration) linear infinite;
 }
 
 .tag {
   display: flex;
   align-items: center;
-  /* gap: 0 0.2rem; */
   color: #e2e8f0;
   font-size: 0.9rem;
   background-color: #334155;
@@ -48,11 +54,6 @@
     0 0.1rem 0.2rem rgb(0 0 0 / 20%),
     0 0.1rem 0.5rem rgb(0 0 0 / 30%),
     0 0.2rem 1.5rem rgb(0 0 0 / 40%);
-  
-  span {
-    font-size: 1.2rem;
-    color: #64748b;
-  }
 }
 
 @keyframes loop {
@@ -60,9 +61,10 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(50%);
+    transform: translateX(-100%);
   }
 }
+
   </style>
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
@@ -110,7 +112,7 @@
               <p class="mt-4 text-gray-600 text-center">
                 I am a [Your Profession] with expertise in [Your Skills]. I have [X] years of experience in [Field/Industry].
               </p>
-              <a href="CV.pdf" download class="mt-6 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">Download CV</a>
+              <a href="CV.jpg" download class="mt-6 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" aria-label="Download CV">Download CV</a>
             </div>
           </section>
 
@@ -165,15 +167,23 @@
           <!-- Projects Section -->
           <section id="projects" class="mt-8">
             <h2 class="text-2xl font-bold text-gray-800">Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div class="flex overflow-x-scroll scrollbar-hide gap-4 mt-4">
               <!-- Project Cards -->
-              <div id="project1" class="bg-white shadow-md rounded-lg p-4">
+              <div id="project1" class="bg-white shadow-md rounded-lg p-4 flex-shrink-0 w-80">
                 <img src="project1.jpg" alt="Project 1" class="w-full rounded-md cursor-pointer" onclick="openModal('project1')">
                 <h3 class="text-xl font-semibold mt-2">Project 1</h3>
               </div>
-              <div id="project2" class="bg-white shadow-md rounded-lg p-4">
+              <div id="project2" class="bg-white shadow-md rounded-lg p-4 flex-shrink-0 w-80">
                 <img src="project2.jpg" alt="Project 2" class="w-full rounded-md cursor-pointer" onclick="openModal('project2')">
                 <h3 class="text-xl font-semibold mt-2">Project 2</h3>
+              </div>
+              <div id="project3" class="bg-white shadow-md rounded-lg p-4 flex-shrink-0 w-80">
+                <img src="project3.jpg" alt="Project 3" class="w-full rounded-md cursor-pointer" onclick="openModal('project3')">
+                <h3 class="text-xl font-semibold mt-2">Project 3</h3>
+              </div>
+              <div id="project4" class="bg-white shadow-md rounded-lg p-4 flex-shrink-0 w-80">
+                <img src="project4.jpg" alt="Project 4" class="w-full rounded-md cursor-pointer" onclick="openModal('project4')">
+                <h3 class="text-xl font-semibold mt-2">Project 4</h3>
               </div>
             </div>
           </section>
@@ -195,14 +205,15 @@
     </div>
   </div>
 
-  <!-- Modal -->
-  <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-lg p-8 max-w-lg">
-      <span class="text-gray-900 text-lg font-bold" id="modal-title"></span>
-      <img src="" alt="Project Image" class="mt-4 rounded-lg" id="modal-image">
-      <button class="mt-6 bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700" onclick="closeModal()">Close</button>
-    </div>
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+  <div class="bg-white rounded-lg p-4 sm:p-6 md:p-8 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
+    <span class="text-gray-900 text-lg font-bold block" id="modal-title"></span>
+    <img src="" alt="Project Image" class="mt-4 rounded-lg w-full h-auto" id="modal-image">
+    <button class="mt-4 bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700" onclick="closeModal()">Close</button>
   </div>
+</div>
+
 
   <script>
     const sidebar = document.getElementById('sidebar');
@@ -223,43 +234,43 @@
     function closeModal() {
       modal.classList.add('hidden');
     }
-    // infinite loop
     const COLORS = ['#bbf7d0', '#99f6e4', '#bfdbfe', '#ddd6fe', '#f5d0fe', '#fed7aa', '#fee2e2'];
-    const TAGS = ['HTML', 'CSS', 'JavaScript', 'Typescript', 'Tailwind', 'React', 'Next.js', 'Gatsby', 'UI/UX', 'SVG', 'animation', 'webdev'];
-    const DURATION = 10000;
-    const ROWS = 3;
-    const TAGS_PER_ROW = 10;
+const TAGS = ['HTML', 'CSS', 'JavaScript', 'Typescript', 'Tailwind', 'React', 'Next.js', 'Gatsby', 'UI/UX', 'SVG', 'animation', 'webdev'];
+const DURATION = 10000;
+const ROWS = 4;
+const TAGS_PER_ROW = 10;
 
-    const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
-    const shuffle = (arr) => [...arr].sort(() => 0.5 - Math.random());
+const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+const shuffle = (arr) => [...arr].sort(() => 0.5 - Math.random());
 
-    const createTag = (text) => {
-      const tag = document.createElement('div');
-      tag.className = 'tag';
-      tag.innerHTML = `<span>#</span> ${text}`;
-      return tag;
-    };
+const createTag = (text) => {
+  const tag = document.createElement('div');
+  tag.className = 'tag';
+  tag.innerHTML = `<span>#</span> ${text}`;
+  return tag;
+};
 
-    const createInfiniteLoopSlider = (duration, reverse) => {
-      const slider = document.createElement('div');
-      slider.className = 'loop-slider';
-      const inner = document.createElement('div');
-      inner.className = 'inner';
-      inner.style.animationDuration = `${duration}ms`;
-      inner.style.animationDirection = reverse ? 'reverse' : 'normal';
-      slider.appendChild(inner);
-      slider.appendChild(inner.cloneNode(true));
-      return slider;
-    };
+const createInfiniteLoopSlider = (duration, reverse) => {
+  const slider = document.createElement('div');
+  slider.className = 'loop-slider';
+  const inner = document.createElement('div');
+  inner.className = 'inner';
+  inner.style.setProperty('--duration', `${duration}ms`);
+  inner.style.setProperty('--direction', reverse ? 'reverse' : 'normal');
+  slider.appendChild(inner);
+  slider.appendChild(inner.cloneNode(true)); // Clone for seamless looping
+  return slider;
+};
 
-    const tagList = document.querySelector('.tag-list');
+const tagList = document.querySelector('.tag-list');
 
-    for (let i = 0; i < ROWS; i++) {
-      const slider = createInfiniteLoopSlider(random(DURATION - 5000, DURATION + 5000), i % 2);
-      const inner = slider.querySelector('.inner');
-      shuffle(TAGS).slice(0, TAGS_PER_ROW).forEach(tag => inner.appendChild(createTag(tag)));
-      tagList.appendChild(slider);
-    }
+for (let i = 0; i < ROWS; i++) {
+  const slider = createInfiniteLoopSlider(random(DURATION - 2000, DURATION + 3000), i % 2);
+  const inner = slider.querySelector('.inner');
+  shuffle(TAGS).slice(0, TAGS_PER_ROW).forEach(tag => inner.appendChild(createTag(tag)));
+  tagList.appendChild(slider);
+}
+
   </script>
 </body>
 </html>
